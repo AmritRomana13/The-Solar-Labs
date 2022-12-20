@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid black;
+  padding: 10px;
+  margin-top: 3vh;
+}
+       .year-card {
+  display: none;
+}
+        </style>
+</head>
+<body>
+    <div style="text-align:center;margin-bottom:5vh;">
+        <h1>Assignment-I</h1>
+    </div>
+    <form id="form">
+        <div class="card center year" style="width: 18rem;">
+            <div class="card-body">
+                <h2>Select Year</h2>
+        <label>
+          <input type="checkbox" value="2021"> 2021
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" value="2022"> 2022
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" value="2023"> 2023
+        </label>
+        </div>
+        </div>
+        <div class="card center year year-card" id="year-2021" style="width: 18rem;">
+            <div class="card-body">
+        <div  class="">
+          <label>Period:
+            <select class="period-dropdown">
+                <option >Select</option>
+              <option value="Jan-Apr">Jan-Apr</option>
+              <option value="May-Aug">May-Aug</option>
+              <option value="Sep-Dec">Sep-Dec</option>
+            </select>
+          </label>
+          <label><input class="input-field" type="number" placeholder="Jan"></label>
+          <label><input class="input-field" type="number" placeholder="Feb"></label>
+          <label><input class="input-field" type="number" placeholder="Mar"></label>
+          <label><input class="input-field" type="number" placeholder="Apr"></label>
+          <button class="calculate-button">Calculate</button>
+          <button class="reset-button">Reset</button>
+        </div>
+        </div>
+        </div>
+
+        <div class="card center year year-card" id="year-2022" style="width: 18rem;">
+            <div class="card-body">
+        <div  class="">
+          <label>Period:
+            <select class="period-dropdown">
+                <option >Select</option>
+              <option value="Jan-Apr">Jan-Apr</option>
+              <option value="May-Aug">May-Aug</option>
+              <option value="Sep-Dec">Sep-Dec</option>
+            </select>
+          </label>
+          <label><input class="input-field" type="number" placeholder="Jan"></label>
+          <label><input class="input-field" type="number" placeholder="Feb"></label>
+          <label><input class="input-field" type="number" placeholder="Mar"></label>
+          <label><input class="input-field" type="number" placeholder="Apr"></label>
+          <button class="calculate-button">Calculate</button>
+          <button class="reset-button">Reset</button>
+        </div>
+        </div>
+        </div>
+        <div class="card center year year-card" id="year-2023" style="width: 18rem;">
+            <div class="card-body">
+        <div  class="">
+          <label>Period:
+            <select class="period-dropdown">
+                <option >Select</option>
+              <option value="Jan-Apr">Jan-Apr</option>
+              <option value="May-Aug">May-Aug</option>
+              <option value="Sep-Dec">Sep-Dec</option>
+            </select>
+          </label>
+          <label><input class="input-field" type="number" placeholder="Jan"></label>
+          <label><input class="input-field" type="number" placeholder="Feb"></label>
+          <label><input class="input-field" type="number" placeholder="Mar"></label>
+          <label><input class="input-field" type="number" placeholder="Apr"></label>
+          <button class="calculate-button">Calculate</button>
+          <button class="reset-button">Reset</button>
+        </div>
+        </div>
+        </div>
+
+      </form>
+
+      <script>
+        const form = document.getElementById("form");
+const yearCards = document.querySelectorAll(".year-card");
+
+form.addEventListener("change", (event) => {
+  const checkbox = event.target;
+  const year = checkbox.value;
+  const yearCard = document.getElementById(`year-${year}`);
+  if (checkbox.checked) {
+    yearCard.style.display = "block";
+  } else {
+    yearCard.style.display = "none";
+  }
+});
+
+yearCards.forEach((yearCard) => {
+  const dropdown = yearCard.querySelector(".period-dropdown");
+  const inputFields = yearCard.querySelectorAll(".input-field");
+  const calculateButton = yearCard.querySelector(".calculate-button");
+  const resetButton = yearCard.querySelector(".reset-button");
+
+  dropdown.addEventListener("change", (event) => {
+    const period = event.target.value;
+    const monthNames = period.split("-");
+    inputFields.forEach((inputField, index) => {
+      inputField.value = 0;
+      inputField.disabled = false;
+      inputField.placeholder = monthNames[index];
+    });
+  });
+
+  inputFields.forEach((inputField) => {
+    inputField.addEventListener("input", (event) => {
+      const value = event.target.value;
+      if (value !== "") {
+        inputFields.forEach((field) => {
+          if (field !== inputField) {
+            field.disabled = true;
+          }
+        });
+      }
+    });
+  });
+
+  calculateButton.addEventListener("click", () => {
+    inputFields.forEach((inputField) => {
+      const value = inputField.value;
+      if (value === "") {
+        const randomValue =
+          Math.floor(Math.random() * 200) - 100 + Number(value);
+        inputField.value = randomValue;
+      }
+    });
+  });
+
+  resetButton.addEventListener("click", () => {
+    dropdown.selectedIndex = -1;
+    inputFields.forEach((inputField) => {
+      inputField.value = "";
+      inputField.disabled = false;
+      inputField.placeholder = "";
+    });
+  });
+});
+      </script>
+</body>
+</html>
